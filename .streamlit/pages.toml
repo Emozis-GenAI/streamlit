@@ -1,0 +1,9 @@
+[[pages]]
+path = "pages/main.py"
+name = "메인화면"
+icon = "🎈"
+
+[[pages]]
+path = "pages/login.py"
+name = "Login"
+icon = "✔"
