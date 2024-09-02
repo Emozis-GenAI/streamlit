@@ -4,7 +4,7 @@ from streamlit_tags import st_tags
 
 from core.state import *
 from core.utils import *
-from core.service import get_profile, update_api, convert_gen
+from core.service import get_profile, update_char_api, convert_gen
 
 setting()
 #-------------------------------------------------------------------
@@ -108,10 +108,12 @@ if st.session_state["modify_btn"]:
     modify_data["details"] = st.session_state["char_det"]
     
     # 데이터 전송
-    response = update_api(modify_data)
+    response = update_char_api(modify_data)
     print(response)
     if response["status"] == "success":
         st.switch_page("pages/main.py")
     else:
         st.error(response["message"])
+
+    re_initialize(["modified_data", "select_img"])
 

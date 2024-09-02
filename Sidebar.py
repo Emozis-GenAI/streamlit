@@ -11,9 +11,8 @@ setting()
 # Settings
 #-------------------------------------------------------------------
 initialize()
-if st.session_state["transition"]:
-    re_initialize()
-print(st.session_state)
+print(sorted(st.session_state.keys()))
+print(st.session_state["select_img"])
 #-------------------------------------------------------------------
 # Sidebar Button(View)
 #-------------------------------------------------------------------
@@ -39,11 +38,11 @@ with st.sidebar:
         st.button(
             label="내 캐릭터 관리",
             use_container_width=True,
-            key="mypage_btn"
+            key="mypage_btn",
+            on_click=mypage
         )
         # 내 캐릭터 관리 버튼(View)
         if st.session_state["mypage_btn"]:
-            st.session_state["mypage_view"] = "mypage"
             st.switch_page("pages/char_list.py")
     #-------------------------------------------------------------------
         # 로그아웃 버튼(View)
@@ -55,6 +54,7 @@ with st.sidebar:
         )
         # 로그아웃 버튼(Script)
         if st.session_state["logout_btn"]:
+            st.session_state["login"] = False
             st.switch_page("pages/main.py")
     #-------------------------------------------------------------------
     # 로그인 안되어 있을 때 
@@ -70,7 +70,6 @@ with st.sidebar:
         # 로그인 버튼(Script)
         if st.session_state["login_btn"]:
             st.switch_page("pages/login.py")
-
 #-------------------------------------------------------------------
 # Navication Bar
 #-------------------------------------------------------------------

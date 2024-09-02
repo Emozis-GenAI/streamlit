@@ -44,7 +44,7 @@ for key, element in data.items():
             key=f"mypage_chat{key}",
             type="primary", 
             use_container_width=True, 
-            on_click=start_chat,
+            on_click=chatroom,
             args=[data[key]]
         )
     #-------------------------------------------------------------------

@@ -1,6 +1,7 @@
 login: False
 login_window: "login"
 user: None
+
 transition: False
 
 header_btn: None
@@ -12,3 +13,5 @@ select_img: "https://i.postimg.cc/q7Ds0VGf/image.png"
 modified_data: None
 
 mypage_view: None
+
+chat_history: []

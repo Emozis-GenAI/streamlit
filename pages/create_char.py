@@ -4,7 +4,7 @@ from streamlit_tags import st_tags
 
 from core.state import *
 from core.utils import *
-from core.service import get_profile, create_api, convert_gen
+from core.service import get_profile, create_char_api, convert_gen
 
 setting()
 #-------------------------------------------------------------------
@@ -25,9 +25,9 @@ with col2:
     st.text_input(label="캐릭터 이름", key="char_name", max_chars=15)
     st.radio(label="성별", options=["남","여","기타"], key="char_gen")
 
-# 캐릭터 프로필 목록 가져오기
+# 성별에 따라 캐릭터 프로필 목록 가져오기
 data = get_profile(st.session_state["char_gen"])
-# popover 인덱스 초기화
+# popover 선택 인덱스 초기화
 st.session_state["char_img"] = None
 
 # 프로필 선택 창
@@ -96,7 +96,7 @@ if st.session_state["create_btn"]:
         "user": st.session_state["user"]
     }
     # 데이터 전송
-    response = create_api(character_data)
+    response = create_char_api(character_data)
     if response["status"] == "success":
         st.switch_page("pages/main.py")
     else:

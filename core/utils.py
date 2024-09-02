@@ -32,10 +32,11 @@ def vertical_space(size:int):
     """
     st.container(height=size, border=False)
 
-def st_textbox(text, fontsize=1, style=None):
+def st_textbox(text, fontsize=1, style=None, align="left"):
+    font_css = f"font-size:{fontsize}rem; text-align:{align}"
     if style=="list":
-        html = f"<li style='font-size:{fontsize}rem; margin-left: 2px;'>{text}</li>"
+        html = f"<li style='{font_css} margin-left: 2px;'>{text}</li>"
     else:
-        html = f"<div style='font-size:{fontsize}rem;'>{text}</div>"
+        html = f"<div style='{font_css}'>{text}</div>"
 
     return st.markdown(html, unsafe_allow_html=True)

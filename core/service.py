@@ -4,6 +4,7 @@ import json
 import re
 
 from core.config import configs
+from core.utils import *
 #-------------------------------------------------------------------
 # Login
 #-------------------------------------------------------------------
@@ -47,7 +48,6 @@ def login_api(data):
 def get_character_info():
     result = {}
     response = requests.get(f"{configs.API_URL}/character")
-    print(response.text)
     if response.status_code == 200:
         data = json.loads(response.text)["data"]
         ordered_data = sorted(data, key=lambda x: x["userCount"], reverse=True)
@@ -63,7 +63,7 @@ def convert_tag(text):
 #-------------------------------------------------------------------
 # Create Character
 #-------------------------------------------------------------------
-def create_api(data):
+def create_char_api(data):
     response = requests.post(
         url=f"{configs.API_URL}/character",
         json=data
@@ -92,7 +92,7 @@ def get_profile(gender):
 #-------------------------------------------------------------------
 # Update Character
 #-------------------------------------------------------------------
-def update_api(data):
+def update_char_api(data):
     response = requests.put(
         url=f"{configs.API_URL}/character",
         json=data
@@ -115,3 +115,57 @@ def my_character_info():
         result = {i:x for i, x in enumerate(ordered_data)}
     
     return result
+#-------------------------------------------------------------------
+# Create Chatroom
+#-------------------------------------------------------------------
+def make_form(data):
+    vertical_space(1)
+    columns = st.columns(spec=[0.25,0.5,0.25])
+    with columns[1]:
+        st.image(data["profile"])
+    st.markdown(f"[이름] {data['name']}")
+    st.markdown(f"[관계] {convert_tag(data['relationship'])}")
+    st.markdown(f"[성격] {convert_tag(data['personality'])}")
+    st.markdown(f"[상세설명]<br> {data['summary']}", unsafe_allow_html=True)
+
+def create_chatroom_api(data):
+    response = requests.post(
+        url=f"{configs.API_URL}/chatroom",
+        json=data
+    )
+    response_json = json.loads(response.text)
+
+    return response_json
+#-------------------------------------------------------------------
+# My Chatting List
+#-------------------------------------------------------------------
+def get_chatting_info():
+    result = {}
+    response = requests.get(
+        url=f"{configs.API_URL}/chatroom/user",
+        json=st.session_state["user"]
+    )
+    if response.status_code == 200:
+        data = json.loads(response.text)["data"]
+        ordered_data = sorted(data, key=lambda x: x["createDate"], reverse=True)
+        result = {i:x for i, x in enumerate(ordered_data)}
+    
+    return result
+#-------------------------------------------------------------------
+# Chatting
+#-------------------------------------------------------------------
+import websockets
+async def send_recieve_chat(data, container):
+    async with websockets.connect(configs.SOCKET_URL) as websocket:
+        send_data = json.dumps(data)
+        await websocket.send(send_data)
+        token = ""
+        while True:
+            response = await websocket.recv()
+
+            if response == "[EOS]":
+                break
+        
+            token += response 
+            container.markdown(token)
+        return token 
