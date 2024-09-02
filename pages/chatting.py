@@ -37,7 +37,7 @@ if not st.session_state["login"]:
     st_textbox("⚠ 로그인을 하지 않으면 대화 내용은 저장되지 않습니다.")
 
 vertical_space(1)
-print("HISTORY", st.session_state["chat_history"])
+# print("HISTORY", st.session_state["chat_history"])
 # 채팅 첫 시작일 때
 if not len(st.session_state["chat_history"]):
     greeting = data["greeting"]
@@ -68,7 +68,7 @@ if request:
     # )
 
     async def main():
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant", avatar=profile):
             container = st.empty()
             data = {
                 "user": st.session_state["user"],

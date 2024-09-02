@@ -66,6 +66,7 @@ def chatroom_popup():
     )
 
     if st.session_state["start_chat_btn"]:
+        st.session_state["chat_history"] = []
         if not len(st.session_state["chatroom_name"]):
             st.error("🚨 채팅방 이름을 1자 이상 입력해야 합니다.")
         else:
