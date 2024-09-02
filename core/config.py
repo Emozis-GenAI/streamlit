@@ -7,19 +7,20 @@ class Config:
         self.path = Path(__file__).parents[1] / "configs"
         self._set_attributes()
 
-    def _read_config(self):
-        configs = {}
-        for file in self.path.iterdir():
-            with open(file, "r", encoding="utf-8") as yaml_file:
-                file_text = yaml.safe_load(yaml_file)
-                if file_text:
-                    configs.update(file_text)
+    def _read_config(self, file):
+        with open(file, "r", encoding="utf-8") as yaml_file:
+            config = yaml.safe_load(yaml_file)
         
-        return configs
+        return config
     
     def _set_attributes(self):
-        self.dictionary = self._read_config()
-        for key, value in self.dictionary.items():
-            setattr(self, key, value)
+        for file in self.path.iterdir():
+            dictionary = self._read_config(file)
+            if file.name == "state.yaml":
+                self.dictionary = dictionary
+                continue
+
+            for key, value in dictionary.items():
+                setattr(self, key, value)
             
 configs = Config()
