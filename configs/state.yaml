@@ -6,12 +6,14 @@ transition: False
 
 header_btn: None
 
-chat_start: False
+start_chat: False
 character_data: None
 
 select_img: "https://i.postimg.cc/q7Ds0VGf/image.png"
+myprofile: "https://i.postimg.cc/q7Ds0VGf/image.png"
 modified_data: None
 
 mypage_view: None
 
 chat_history: []
+chatroom_id: None

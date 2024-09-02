@@ -10,4 +10,6 @@ streamlit
 streamlit-authenticator
 streamlit-image-select
 streamlit-tags
+requests
+websockets
 

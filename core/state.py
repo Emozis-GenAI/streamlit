@@ -1,7 +1,7 @@
 import streamlit as st 
 
 from core.config import configs
-from core.service import convert_tag, create_chatroom_api, make_form
+from core.service import *
 #-------------------------------------------------------------------
 # Settings
 #-------------------------------------------------------------------
@@ -66,21 +66,24 @@ def chatroom_popup():
     )
 
     if st.session_state["start_chat_btn"]:
-        insert_data = {
-            "name": st.session_state["chatroom_name"],
-            "character": data,
-            "user": st.session_state["user"]
-        }
-        # 로그인 되어 있을 때만 데이터 전송
-        if st.session_state["login"]:
-            response = create_chatroom_api(insert_data)
-            if response["status"] == "success":
-                st.session_state["chatroom_id"] = response["data"]
-                st.switch_page("pages/chatting.py")
-            else:
-                st.error(response["message"])
+        if not len(st.session_state["chatroom_name"]):
+            st.error("🚨 채팅방 이름을 1자 이상 입력해야 합니다.")
         else:
-            st.switch_page("pages/chatting.py")
+            insert_data = {
+                "name": st.session_state["chatroom_name"],
+                "character": data,
+                "user": st.session_state["user"]
+            }
+            # 로그인 되어 있을 때만 데이터 전송
+            if st.session_state["login"]:
+                response = create_chatroom_api(insert_data)
+                if response["status"] == "success":
+                    st.session_state["chatroom_id"] = response["data"]
+                    st.switch_page("pages/chatting.py")
+                else:
+                    st.error(response["message"])
+            else:
+                st.switch_page("pages/chatting.py")
         
     
 ## 랭킹에 있는 채팅하기 클릭
@@ -90,8 +93,13 @@ def chatroom(data):
 
 ## 내 채팅 목록에 있는 채팅하기 클릭
 def chatting(data):
-    st.session_state["character_data"] = data
+    chat_reset_api()
+    st.session_state["chat_history"] = get_chat_history()
+    st.session_state["chatroom_title"] = data["name"]
+    st.session_state["character_data"] = data["character"]
+    st.session_state["chatroom_id"] = data["_id"]
     st.session_state["start_chat"] = True
+    
 
 #-------------------------------------------------------------------
 # Create Character

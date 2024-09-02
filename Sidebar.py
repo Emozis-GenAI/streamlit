@@ -11,8 +11,8 @@ setting()
 # Settings
 #-------------------------------------------------------------------
 initialize()
-print(sorted(st.session_state.keys()))
-print(st.session_state["select_img"])
+# print(sorted(st.session_state.keys()))
+# print(st.session_state["select_img"])
 #-------------------------------------------------------------------
 # Sidebar Button(View)
 #-------------------------------------------------------------------

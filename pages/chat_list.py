@@ -24,8 +24,12 @@ for key, element in data.items():
         col1.image(char_data["profile"])
         # 캐릭터 정보
         with col2:
-            st_textbox(char_data["name"], 0.9)
+            # 채팅방 이름
+            st_textbox(element["name"])
             vertical_space(1)
+
+            # 캐릭터 정보
+            st_textbox(char_data["name"], 0.9)
             st_textbox(convert_tag(char_data["personality"]), 0.9)
             st_textbox(char_data["summary"], 0.9)
         # 채팅하기 버튼
@@ -35,7 +39,7 @@ for key, element in data.items():
             type="primary", 
             use_container_width=True, 
             on_click=chatting,
-            args=[data[key]["character"]]
+            args=[data[key]]
         )
     #-------------------------------------------------------------------
     # Script

@@ -1,4 +1,5 @@
 import streamlit as st
+import websockets
 import requests 
 import json 
 import re
@@ -154,7 +155,6 @@ def get_chatting_info():
 #-------------------------------------------------------------------
 # Chatting
 #-------------------------------------------------------------------
-import websockets
 async def send_recieve_chat(data, container):
     async with websockets.connect(configs.SOCKET_URL) as websocket:
         send_data = json.dumps(data)
@@ -169,3 +169,47 @@ async def send_recieve_chat(data, container):
             token += response 
             container.markdown(token)
         return token 
+    
+def chat_reset_api():
+    response = requests.get(
+        url=f"{configs.API_URL}/reset",
+        json=st.session_state["user"]
+    )
+
+def print_and_save_chat(role, content):
+    if role == "assistant":
+        profile = st.session_state["character_data"]["profile"]
+    else:
+        profile = st.session_state["myprofile"]
+    # 출력
+    st.chat_message("assistant", avatar=profile).markdown(content)
+    # streamlit 메모리 저장
+    st.session_state["chat_history"].append(
+        {"role": role, "content": content}
+    )
+    # DB 저장
+    if st.session_state["login"]:
+        data = {
+            "chatroom_id": st.session_state["chatroom_id"],
+            "user": st.session_state["user"],
+            "role": role,
+            "content": content
+        }
+        response = requests.post(
+            url=f"{configs.API_URL}/chatting",
+            json=data
+        ) 
+        response_json = json.loads(response.text)
+
+        return response_json
+    
+def get_chat_history():
+    result = {}
+    response = requests.get(
+        url=f"{configs.API_URL}/chatting/{st.session_state['chatroom_id']}"
+    )
+    if response.status_code == 200:
+        data = json.loads(response.text)["data"]
+        ordered_data = sorted(data, key=lambda x: x["createDate"])
+    
+    return ordered_data
