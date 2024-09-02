@@ -1,6 +1,21 @@
 [[pages]]
 path = "pages/main.py"
-name = "메인화면"
+name = "메인 화면"
+icon = "🎈"
+
+[[pages]]
+path = "pages/create_char.py"
+name = "캐릭터 생성"
+icon = "🎈"
+
+[[pages]]
+path = "pages/char_list.py"
+name = "내 캐릭터 관리"
+icon = "🎈"
+
+[[pages]]
+path = "pages/modify_char.py"
+name = "내 캐릭터 수정"
 icon = "🎈"
 
 [[pages]]

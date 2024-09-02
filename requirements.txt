@@ -1,0 +1,13 @@
+langchain
+langchain-openai
+langchainhub
+langsmith
+loguru
+motor
+python-dotenv
+st-pages
+streamlit
+streamlit-authenticator
+streamlit-image-select
+streamlit-tags
+

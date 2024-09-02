@@ -10,41 +10,67 @@ setting()
 #-------------------------------------------------------------------
 # Settings
 #-------------------------------------------------------------------
-# 초기 변수 세팅
-def initialize(dictionary):
-    for key, value in dictionary.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
-
-initialize(configs.dictionary)
+initialize()
+if st.session_state["transition"]:
+    re_initialize()
+print(st.session_state)
 #-------------------------------------------------------------------
 # Sidebar Button(View)
 #-------------------------------------------------------------------
 with st.sidebar:
-    # HOME 버튼
+    # 유저명 출력
+    if st.session_state["user"]:
+        user = st.session_state["user"]
+        st.markdown(f"{user['username']}({user['nickname']})")
+    #-----------------------------------------------------)--------------
+    # HOME 버튼(View)
     st.button(
         label="HOME",
         use_container_width=True,
         key="home_btn"
     )
-    # 로그인 버튼
-    st.button(
-        label="로그인",
-        use_container_width=True,
-        key="login_btn",
-        on_click=login_window,
-        args=["login"]
-    )
-#-------------------------------------------------------------------
-# Sidebar Button(Script)
-#-------------------------------------------------------------------
-# Home 버튼 누를 때 
-if st.session_state["home_btn"]:
-    st.switch_page("pages/main.py")
+    # Home 버튼(Script)
+    if st.session_state["home_btn"]:
+        st.switch_page("pages/main.py")   
+    #-------------------------------------------------------------------
+    # 로그인 되어 있을 때
+    if st.session_state["login"]:
+        # 내 캐릭터 관리 버튼(View)
+        st.button(
+            label="내 캐릭터 관리",
+            use_container_width=True,
+            key="mypage_btn"
+        )
+        # 내 캐릭터 관리 버튼(View)
+        if st.session_state["mypage_btn"]:
+            st.session_state["mypage_view"] = "mypage"
+            st.switch_page("pages/char_list.py")
+    #-------------------------------------------------------------------
+        # 로그아웃 버튼(View)
+        st.button(
+            label="로그아웃",
+            use_container_width=True,
+            key="logout_btn",
+            on_click=logout
+        )
+        # 로그아웃 버튼(Script)
+        if st.session_state["logout_btn"]:
+            st.switch_page("pages/main.py")
+    #-------------------------------------------------------------------
+    # 로그인 안되어 있을 때 
+    else:
+        # 로그인 버튼(View)
+        st.button(
+            label="로그인",
+            use_container_width=True,
+            key="login_btn",
+            on_click=login_window,
+            args=["login"]
+        )
+        # 로그인 버튼(Script)
+        if st.session_state["login_btn"]:
+            st.switch_page("pages/login.py")
 
-# 로그인 버튼 누를 때 
-if st.session_state["login_btn"]:
-    st.switch_page("pages/login.py")
 #-------------------------------------------------------------------
 # Navication Bar
 #-------------------------------------------------------------------
