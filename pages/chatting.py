@@ -23,7 +23,8 @@ else:
     data = st.session_state["chatroom_data"]
     print(data.keys())
     char_data = data["character"]
-    st.session_state["char_profile"] = char_data["profile"]
+
+st.session_state["char_profile"] = char_data["profile"]
 
 #-------------------------------------------------------------------
 # Sidebar
