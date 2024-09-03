@@ -18,7 +18,7 @@ class ChatRoomPopup:
 class ChatRoomClick:
     @staticmethod
     def chatting(data):
-        ChatService.chat_reset_api()
+        ChatService.reset_model_api()
         st.session_state["chatroom_data"] = data
         st.session_state["chat_history"] = ChatService.get_chat_history()
         st.session_state["start_chat"] = True

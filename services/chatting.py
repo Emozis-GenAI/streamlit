@@ -10,7 +10,6 @@ class ChatService:
     @staticmethod
     # @st.cache_data
     def get_chat_history():
-
         chatroom_data = st.session_state["chatroom_data"]
         sub_data = {
             "id": chatroom_data["_id"],
@@ -89,7 +88,7 @@ class ChatService:
             return token 
 
     @staticmethod
-    def chat_reset_api():
+    def reset_model_api():
         response = requests.get(
             url=f"{configs.API_URL}/reset"
         )

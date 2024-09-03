@@ -12,7 +12,6 @@ from states.home import HomeClick
 from services.converter import converter 
 from services.char_list import CharListService 
 setting()
-print(st.session_state["mypage_view"])
 #-------------------------------------------------------------------
 # Settings
 #-------------------------------------------------------------------

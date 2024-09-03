@@ -58,7 +58,7 @@ class HomePopup:
                             "_id": chatroom_id,
                             "name": st.session_state["chatroom_name"]
                         }
-                ChatService.chat_reset_api()
+                ChatService.reset_model_api()
 
                 # 캐릭터 조회 수 반영
                 insert_data = {

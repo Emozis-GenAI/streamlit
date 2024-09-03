@@ -22,5 +22,5 @@ def custom_init(keys):
     if st.session_state["transition"]:
         for key in keys:
             st.session_state[key] = configs.dictionary[key]
-    print("화면전환시 초기화")
+    # print("화면전환시 초기화")
     st.session_state["transition"] = False
