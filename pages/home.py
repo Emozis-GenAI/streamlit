@@ -16,6 +16,10 @@ setting()
 # 캐릭터 정보 가져오기
 data = HomeService.get_character_info()
 #-------------------------------------------------------------------
+# 인사
+#-------------------------------------------------------------------
+st_textbox("Welcom to EMOG!", fontsize=1.5, align="center")
+#-------------------------------------------------------------------
 # Header(View)
 #-------------------------------------------------------------------
 # 내 채팅 목록, 캐릭터 생성 버튼
@@ -52,19 +56,21 @@ elif st.session_state["header_btn"] == 1:
 # 제목
 st.markdown("---")
 st.markdown("## 👑 랭킹순")
+vertical_space(1)
 
 cols = st.columns(3)
 
 # 각 열에 버튼 추가
 for key, element in data.items():
     col = cols[key % 3]  
-    with col.container(border=True, height=350):
+    with col.container(border=True, height=365):
         # 이미지 삽입
         st.image(element["profile"])
         # 내용 설명
-        st_textbox(element["name"], fontsize=0.9)
-        st_textbox(Converter.tag(element["personality"]), fontsize=0.8)
-        vertical_space(2)
+        with st.container(border=False, height=60):
+            st_textbox(element["name"], fontsize=0.9)
+            st_textbox(Converter.tag(element["personality"]), fontsize=0.8)
+            vertical_space(2)
         # 채팅하기 버튼
         st.button(
             label="채팅하기", 

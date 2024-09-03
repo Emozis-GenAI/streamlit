@@ -60,6 +60,14 @@ class HomePopup:
                         }
                 ChatService.chat_reset_api()
 
+                # 캐릭터 조회 수 반영
+                insert_data = {
+                    "id": data["_id"],
+                    "userCount": data["userCount"] + 1
+                }
+                HomeService.update_usercount_api(insert_data)
+                
+
                 # 화면 전환
                 st.session_state["character_data"] = data
                 st.session_state["transition"] = True 

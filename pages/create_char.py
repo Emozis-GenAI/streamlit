@@ -5,7 +5,9 @@ from streamlit_tags import st_tags
 from core.state import *
 from core.utils import *
 
-from services.create_char import CreateChar
+from states.create_char import CreateCharClick
+
+from services.create_char import CreateCharService
 from services.converter import converter
 
 setting()
@@ -31,7 +33,7 @@ with col2:
     st.radio(label="성별", options=["남","여","기타"], key="char_gen")
 
 # 성별에 따라 캐릭터 프로필 목록 가져오기
-data = CreateChar.get_profile(st.session_state["char_gen"])
+data = CreateCharService.get_profile(st.session_state["char_gen"])
 # popover 선택 인덱스 초기화
 st.session_state["char_img"] = 0
 
@@ -48,7 +50,7 @@ with st.popover("프로필 선택", use_container_width=True):
         use_container_width=True, 
         type="primary",
         key="select_btn",
-        on_click=change_img,
+        on_click=CreateCharClick.change_img,
         args=[data]
     )
 # 관계
@@ -109,7 +111,7 @@ if st.session_state["create_btn"]:
         "user": st.session_state["user"]
     }
     # 데이터 전송
-    response = CreateChar.create_char_api(character_data)
+    response = CreateCharService.create_char_api(character_data)
     if response:
         st.switch_page("pages/char_list.py")
 

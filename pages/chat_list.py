@@ -17,6 +17,7 @@ data = ChatRoomService.get_chatting_info()
 #-------------------------------------------------------------------
 # 제목
 st.markdown("## 💬 내 채팅 목록")
+st.markdown("---")
 
 if not data:
     st.markdown("만들어진 채팅이 없습니다.")
@@ -47,9 +48,19 @@ else:
                 on_click=ChatRoomClick.chatting,
                 args=[data[key]]
             )
+            # 삭제하기 버튼
+            col3.button(
+                label="삭제하기", 
+                key=f"del_chat{key}",
+                use_container_width=True, 
+                on_click=ChatRoomClick.delete,
+                args=[data[key]]
+            )
         #-------------------------------------------------------------------
         # Script
         if st.session_state["start_chat"]:
             st.session_state["transition"] = True
             st.switch_page("pages/chatting.py")
+
+        
         

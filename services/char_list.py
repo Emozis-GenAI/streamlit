@@ -8,35 +8,34 @@ from core.utils import *
 
 from services.converter import Converter
 
-class CreateCharService:
-    # 프로필 가져오는 메서드
-    @st.cache_data
-    def get_profile(gender):
+class CharListService:
+    @staticmethod 
+    def my_character_info():
         result = {}
         response = requests.get(
-            url=f"{configs.API_URL}/profile/{Converter.gender(gender)}"
+            url=f"{configs.API_URL}/character/user",
+            json=st.session_state["user"]
         )
         if response.status_code == 200:
             response_json = json.loads(response.text)
             if response_json["status"] == "success":
-                data = response_json["data"]
-                ordered_data = sorted(data, key=lambda x: x["age"], reverse=True)
-                result = {i:x["img_url"] for i, x in enumerate(ordered_data)}
-                logger.success(f"{response_json['message']}: {gender}")
+                data = json.loads(response.text)["data"]
+                ordered_data = sorted(data, key=lambda x: x["createDate"], reverse=True)
+                result = {i:x for i, x in enumerate(ordered_data)}
+                logger.success(response_json["message"])
             else:
                 logger.warning(response_json["message"])
         else:
             logger.warning("🚨 API 연결에 실패했습니다.")
-        
+
         return result
     
-    # 캐릭터 생성 API 요청하는 메서드
-    def create_char_api(data):
+    @staticmethod
+    def del_character(data):
         result = False
 
-        response = requests.post(
-            url=f"{configs.API_URL}/character",
-            json=data
+        response = requests.delete(
+            url=f"{configs.API_URL}/character/{data['_id']}"
         )
         if response.status_code == 200:
             response_json = json.loads(response.text)

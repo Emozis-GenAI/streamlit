@@ -8,9 +8,10 @@ character_data: None
 chatroom_data: None
 select_img: "https://i.postimg.cc/q7Ds0VGf/image.png"
 modified_data: None
-mypage_view: None
+mypage_view: "mypage"
 chat_history: []
 chatroom_id: None
 new_chat: False
 user_profile: "https://i.postimg.cc/q7Ds0VGf/image.png"
 char_profile: "https://i.postimg.cc/q7Ds0VGf/image.png"
+delete_character: False

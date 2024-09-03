@@ -42,4 +42,23 @@ class HomeService:
             logger.warning("🚨 API 연결에 실패했습니다.")
         
         return None
+    
+    @staticmethod
+    def update_usercount_api(data):
+        response = requests.put(
+            url=f"{configs.API_URL}/character/count",
+            json=data
+        )
+        if response.status_code == 200:
+            response_json = json.loads(response.text)
+            if response_json["status"] == "success":
+                logger.success(response_json["message"])
+
+                return True
+            else:
+                logger.warning(response_json["message"])
+        else:
+            logger.warning("🚨 API 연결에 실패했습니다.")
+        
+        return False
 

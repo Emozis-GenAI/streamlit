@@ -9,6 +9,10 @@ from core.config import configs
 from states.login import LoginClick
 
 setting()
+
+st.logo(
+    image="https://i.postimg.cc/9FwDHFdd/emogi-logo.png"
+)
 #-------------------------------------------------------------------
 # Settings
 #-------------------------------------------------------------------

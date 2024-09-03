@@ -25,3 +25,22 @@ class ChatRoomService:
                 logger.warning(response_json["message"])
 
         return result
+    
+    @staticmethod
+    def del_chatroom(data):
+        result = False
+
+        response = requests.delete(
+            url=f"{configs.API_URL}/chatroom/{data['_id']}"
+        )
+        if response.status_code == 200:
+            response_json = json.loads(response.text)
+            if response_json["status"] == "success":
+                logger.success(response_json["message"])
+                return True
+            else:
+                logger.warning(response_json["message"])
+        else:
+            logger.warning("🚨 API 연결에 실패했습니다.")
+
+        return result

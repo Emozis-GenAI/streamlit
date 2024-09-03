@@ -4,10 +4,13 @@ from streamlit_tags import st_tags
 
 from core.state import *
 from core.utils import *
-from core.service import update_char_api
 
-from services.create_char import CreateChar
+from states.create_char import CreateCharClick
+
+from services.modify_char import ModifyCharService
+from services.create_char import CreateCharService
 from services.converter import converter
+
 setting()
 #-------------------------------------------------------------------
 # Form(View)
@@ -41,7 +44,7 @@ with col2:
     )
 
 # 캐릭터 프로필 목록 가져오기
-data = CreateChar.get_profile(st.session_state["char_gen"])
+data = CreateCharService.get_profile(st.session_state["char_gen"])
 # popover 인덱스 초기화
 st.session_state["char_img"] = None
 
@@ -58,7 +61,7 @@ with st.popover("프로필 선택", use_container_width=True):
         use_container_width=True, 
         type="primary",
         key="select_btn",
-        on_click=change_img,
+        on_click=CreateCharClick.change_img,
         args=[data]
     )
 # 관계
@@ -110,12 +113,10 @@ if st.session_state["modify_btn"]:
     modify_data["details"] = st.session_state["char_det"]
     
     # 데이터 전송
-    response = update_char_api(modify_data)
-    print(response)
-    if response["status"] == "success":
-        st.switch_page("pages/main.py")
-    else:
-        st.error(response["message"])
+    response = ModifyCharService.update_char_api(modify_data)
+    if response:
+        st.session_state["transition"] = True
+        custom_init(["modified_data", "select_img", "mypage_view"])
+        st.switch_page("pages/char_list.py")
 
-    custom_init(["modified_data", "select_img"])
-
+    
