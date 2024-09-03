@@ -25,6 +25,9 @@ data = CharListService.my_character_info()
 st.markdown("## 🛠️ 내 캐릭터 관리")
 st.markdown("---")
 
+if not data:
+    st.markdown("만들어진 캐릭터가 없습니다.")
+
 for key, element in data.items():
     # View
     with st.container(border=True):
