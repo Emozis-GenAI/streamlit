@@ -24,7 +24,7 @@ class CreateChar:
                 data = response_json["data"]
                 ordered_data = sorted(data, key=lambda x: x["age"])
                 result = {i:x["img_url"] for i, x in enumerate(ordered_data)}
-                logger.success(f"✔ Success Load Profile Images: {gender}")
+                logger.success(f"{response_json['message']}: {gender}")
             else:
                 logger.warning(response_json["message"])
         else:
@@ -43,7 +43,7 @@ class CreateChar:
         if response.status_code == 200:
             response_json = json.loads(response.text)
             if response_json["status"] == "success":
-                logger.success("✔ Success Create Character")
+                logger.success(response_json["message"])
                 return True
             else:
                 logger.warning(response_json["message"])

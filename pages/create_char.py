@@ -17,6 +17,7 @@ custom_init(["select_img"])
 # 첫 인사
 st.text_input(
     label="첫 인사",
+    value=configs.GREETING,
     key="char_greet",
     placeholder="채팅의 첫 인사말을 작성해주세요"
 )
@@ -51,8 +52,13 @@ with st.popover("프로필 선택", use_container_width=True):
         args=[data]
     )
 # 관계
-keywords = st_tags(
+if "char_rel" in st.session_state:
+    rel_value = st.session_state["char_rel"]
+else:
+    rel_value = None
+st_tags(
     label="관계",
+    value=rel_value,
     text='관계를 입력하고 Enter를 누르세요(최대 5개)',
     suggestions=['애인', '남사친', '여사친', 
                  '전남친', '가족', '직장상사', 
@@ -60,8 +66,13 @@ keywords = st_tags(
     maxtags = configs.MAX_TAGS,
     key="char_rel")
 # 성격
-keywords = st_tags(
+if "char_per" in st.session_state:
+    per_value = st.session_state["char_per"]
+else:
+    per_value = None
+st_tags(
     label="성격",
+    value=per_value,
     text='성격을 입력하고 Enter를 누르세요(최대 5개)',
     suggestions=['착함', '날카로움', '예민함', 
                  '온화함', '성격급함', '푸근함', 
@@ -100,5 +111,5 @@ if st.session_state["create_btn"]:
     # 데이터 전송
     response = CreateChar.create_char_api(character_data)
     if response:
-        st.switch_page("pages/main.py")
+        st.switch_page("pages/home.py")
 
