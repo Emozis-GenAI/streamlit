@@ -1,9 +1,10 @@
 import streamlit as st
-import json
 
 from core.utils import *
 from core.state import *
-from core.service import validate_login, register_api, login_api
+
+from states.login import LoginClick
+from services.login import LoginService
 
 setting()
 #-------------------------------------------------------------------
@@ -30,7 +31,7 @@ if st.session_state["login_window"] == "login":
         st.button(
             label="회원가입", 
             use_container_width=True, 
-            on_click=login_window, 
+            on_click=LoginClick.login_window, 
             args=["register"],
             key="register"
         )
@@ -50,18 +51,17 @@ if st.session_state["login_window"] == "login":
                 "password": password,
             }
             # 데이터 검증
-            val_data = validate_login(data)
+            val_data = LoginClick.validate_login(data)
             if isinstance(val_data, str):
                 st.error(val_data)
             # 데이터 전송
             else:
-                response = login_api(data)
-                if response["status"] == "success":
-                    st.session_state["user"] = response["data"]
+                response = LoginService.login_api(data)
+                if response:
+                    st.session_state["user"] = response
                     st.session_state["login"] = True
-                    st.switch_page("pages/main.py")
-                else:
-                    st.error(response["message"])
+                    st.session_state["transition"] = True
+                    st.switch_page("pages/home.py")
 #-------------------------------------------------------------------
 # 회원가입 화면
 elif st.session_state["login_window"] == "register":
@@ -96,19 +96,18 @@ elif st.session_state["login_window"] == "register":
                 "password": password,
             }
             # 데이터 검증
-            val_data = validate_login(data)
+            val_data = LoginClick.validate_login(data)
             if password != check_password:
                 st.error("비밀번호와 확인 비밀번호가 일치하지 않습니다.", icon="🚨")
             elif isinstance(val_data, str):
                 st.error(val_data)
             # 데이터 전송
             else:
-                response = register_api(data)
-                if response["status"] == "success":
-                    login_window("login")
+                response = LoginService.register_api(data)
+                if response:
+                    LoginClick.login_window("login")
+                    st.session_state["transition"] = True
                     st.switch_page("pages/login.py")
-                else:
-                    st.error(response["message"])
 #-------------------------------------------------------------------
 # 비밀번호 변경 화면(deprecated)
 # elif st.session_state["login_window"] == "reset":

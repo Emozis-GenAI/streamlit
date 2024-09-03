@@ -6,6 +6,8 @@ from core.utils import *
 from core.state import *
 from core.config import configs
 
+from states.login import LoginClick
+
 setting()
 #-------------------------------------------------------------------
 # Settings
@@ -30,7 +32,7 @@ with st.sidebar:
     )
     # Home 버튼(Script)
     if st.session_state["home_btn"]:
-        st.switch_page("pages/main.py")   
+        st.switch_page("pages/home.py")   
     #-------------------------------------------------------------------
     # 로그인 되어 있을 때
     if st.session_state["login"]:
@@ -39,7 +41,7 @@ with st.sidebar:
             label="내 캐릭터 관리",
             use_container_width=True,
             key="mypage_btn",
-            on_click=mypage
+            on_click=LoginClick.mypage
         )
         # 내 캐릭터 관리 버튼(View)
         if st.session_state["mypage_btn"]:
@@ -50,12 +52,12 @@ with st.sidebar:
             label="로그아웃",
             use_container_width=True,
             key="logout_btn",
-            on_click=logout
+            on_click=LoginClick.logout
         )
         # 로그아웃 버튼(Script)
         if st.session_state["logout_btn"]:
             st.session_state["login"] = False
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/home.py")
     #-------------------------------------------------------------------
     # 로그인 안되어 있을 때 
     else:
@@ -64,7 +66,7 @@ with st.sidebar:
             label="로그인",
             use_container_width=True,
             key="login_btn",
-            on_click=login_window,
+            on_click=LoginClick.login_window,
             args=["login"]
         )
         # 로그인 버튼(Script)
