@@ -30,8 +30,8 @@ for key, element in data.items():
         with col2:
             st_textbox(element["name"], 0.9)
             vertical_space(1)
-            st_textbox(convert_tag(element["personality"]), 0.9)
-            st_textbox(element["summary"], 0.9)
+            st_textbox(convert_tag(element["personality"]), 0.8)
+            st_textbox(element["summary"], 0.8)
         # 수정하기 버튼
         col3.button(
             label="수정하기", 

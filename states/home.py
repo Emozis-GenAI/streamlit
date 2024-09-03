@@ -2,6 +2,7 @@ import streamlit as st
 
 from services.converter import converter
 from services.home import HomeService 
+from services.chatting import ChatService
 
 class HomePopup:
     ## 로그인 팝업창
@@ -57,6 +58,7 @@ class HomePopup:
                             "_id": chatroom_id,
                             "name": st.session_state["chatroom_name"]
                         }
+                ChatService.chat_reset_api()
 
                 # 화면 전환
                 st.session_state["character_data"] = data

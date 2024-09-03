@@ -37,6 +37,9 @@ class ChatService:
     
     @staticmethod
     def send_chat_api(role, content):
+        if not st.session_state["login"]:
+            return False
+
         result = False 
 
         chatroom_data = st.session_state["chatroom_data"]
@@ -88,8 +91,7 @@ class ChatService:
     @staticmethod
     def chat_reset_api():
         response = requests.get(
-            url=f"{configs.API_URL}/reset",
-            json=st.session_state["user"]
+            url=f"{configs.API_URL}/reset"
         )
         if response.status_code == 200:
             response_json = json.loads(response.text)

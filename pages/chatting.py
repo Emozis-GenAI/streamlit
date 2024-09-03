@@ -58,12 +58,13 @@ if not st.session_state["login"]:
 vertical_space(1)
 #-------------------------------------------------------------------
 # 새로운 채팅일 때
-if st.session_state["new_chat"]:
+if len(st.session_state["chat_history"]) == 0:
     st_chat_message("assistant", char_data["greeting"])
     ChatService.send_chat_api("assistant",char_data["greeting"])
 
 # 채팅 기록이 있을 때
 else:
+    print(st.session_state["chat_history"])
     for chat in st.session_state["chat_history"]:
         st_chat_message(chat["role"], chat["content"], save=False)
 #-------------------------------------------------------------------

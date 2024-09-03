@@ -111,5 +111,5 @@ if st.session_state["create_btn"]:
     # 데이터 전송
     response = CreateChar.create_char_api(character_data)
     if response:
-        st.switch_page("pages/home.py")
+        st.switch_page("pages/char_list.py")
 
