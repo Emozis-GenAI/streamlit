@@ -10,6 +10,7 @@ from services.converter import Converter
 
 class CreateCharService:
     # 프로필 가져오는 메서드
+    @staticmethod
     @st.cache_data
     def get_profile(gender):
         result = {}
@@ -31,6 +32,7 @@ class CreateCharService:
         return result
     
     # 캐릭터 생성 API 요청하는 메서드
+    @staticmethod
     def create_char_api(data):
         result = False
 
