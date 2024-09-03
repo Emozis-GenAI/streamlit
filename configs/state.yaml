@@ -5,9 +5,12 @@ transition: False
 header_btn: None
 start_chat: False
 character_data: None
+chatroom_data: None
 select_img: "https://i.postimg.cc/q7Ds0VGf/image.png"
-myprofile: "https://i.postimg.cc/q7Ds0VGf/image.png"
 modified_data: None
 mypage_view: None
 chat_history: []
 chatroom_id: None
+new_chat: False
+user_profile: "https://i.postimg.cc/q7Ds0VGf/image.png"
+char_profile: "https://i.postimg.cc/q7Ds0VGf/image.png"

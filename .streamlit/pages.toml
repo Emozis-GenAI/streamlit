@@ -1,5 +1,5 @@
 [[pages]]
-path = "pages/main.py"
+path = "pages/home.py"
 name = "메인 화면"
 icon = "🎈"
 

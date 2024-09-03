@@ -2,11 +2,11 @@ import streamlit as st
 from streamlit_image_select import image_select
 from streamlit_tags import st_tags
 
-from core.logger import logger
 from core.state import *
 from core.utils import *
 
-from services.create_char import CreateChar, Converter
+from services.create_char import CreateChar
+from services.converter import converter
 
 setting()
 # 초기화
@@ -101,7 +101,7 @@ if st.session_state["create_btn"]:
     character_data = {
         "name": st.session_state["char_name"],
         "profile": st.session_state["select_img"],
-        "gender": Converter.convert_gen(st.session_state["char_gen"]),
+        "gender": converter.gender(st.session_state["char_gen"]),
         "relationship": ','.join(st.session_state["char_rel"]),
         "personality": ','.join(st.session_state["char_per"]),
         "greeting": st.session_state["char_greet"],

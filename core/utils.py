@@ -40,3 +40,20 @@ def st_textbox(text, fontsize=1, style=None, align="left"):
         html = f"<div style='{font_css}'>{text}</div>"
 
     return st.markdown(html, unsafe_allow_html=True)
+
+def st_chat_message(role, message, save=True):
+    if role == "user":
+        avatar = st.session_state["user_profile"]
+    else:
+        avatar = st.session_state["char_profile"]
+
+    # 상태 저장
+    if save:
+        st.session_state["chat_history"].append(
+            {
+                "role": role,
+                "content": message
+            }
+        )
+            
+    return st.chat_message(role, avatar=avatar).markdown(message)

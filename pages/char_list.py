@@ -5,6 +5,8 @@ from streamlit_tags import st_tags
 from core.state import *
 from core.utils import *
 from core.service import my_character_info, convert_tag
+
+from states.home import HomeClick
 setting()
 #-------------------------------------------------------------------
 # Settings
@@ -44,7 +46,7 @@ for key, element in data.items():
             key=f"mypage_chat{key}",
             type="primary", 
             use_container_width=True, 
-            on_click=chatroom,
+            on_click=HomeClick.chatroom,
             args=[data[key]]
         )
     #-------------------------------------------------------------------

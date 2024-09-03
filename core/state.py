@@ -23,87 +23,23 @@ def custom_init(keys):
         for key in keys:
             st.session_state[key] = configs.dictionary[key]
     st.session_state["transition"] = False
-#-------------------------------------------------------------------
-# On Click Event
-#-------------------------------------------------------------------
-# Sidebar
-## 내 캐릭터 관리 클릭
-def mypage():
-    st.session_state["mypage_view"] = "mypage"
 
-# 로그아웃 클릭
-def logout():
-    st.session_state["user"] = None
-
-## 로그인 클릭
-def login_window(window):
-    st.session_state["login_window"] = window
 #-------------------------------------------------------------------
 # Main
-## 로그인 팝업창
-@st.dialog("⚠ 로그인")
-def login_popup():
-    st.markdown("로그인 해야 할 수 있는 기능입니다.")
-    _, col = st.columns(spec=[0.7, 0.3])
-    login_btn = col.button("로그인", use_container_width=True)
-    if login_btn:
-        st.switch_page("pages/login.py")
 
-## 채팅방 생성 팝업창
-@st.dialog("⭐ 채팅방 생성")
-def chatroom_popup():
-    st.text_input(
-        label="채팅방 이름", 
-        max_chars=15, 
-        placeholder="채팅방 이름을 입력하세요(15자 이내)",
-        key="chatroom_name"
-    )
-    st.session_state["chatroom_title"] = st.session_state["chatroom_name"]
-    data = st.session_state["character_data"]
-    make_form(data)
-
-    st.button(
-        label="채팅 시작하기",
-        use_container_width=True,
-        type="primary",
-        key="start_chat_btn"
-    )
-
-    if st.session_state["start_chat_btn"]:
-        st.session_state["chat_history"] = []
-        if not len(st.session_state["chatroom_name"]):
-            st.error("🚨 채팅방 이름을 1자 이상 입력해야 합니다.")
-        else:
-            insert_data = {
-                "name": st.session_state["chatroom_name"],
-                "character": data,
-                "user": st.session_state["user"]
-            }
-            # 로그인 되어 있을 때만 데이터 전송
-            if st.session_state["login"]:
-                response = create_chatroom_api(insert_data)
-                if response["status"] == "success":
-                    st.session_state["chatroom_id"] = response["data"]
-                    st.switch_page("pages/chatting.py")
-                else:
-                    st.error(response["message"])
-            else:
-                st.switch_page("pages/chatting.py")
-        
     
-## 랭킹에 있는 채팅하기 클릭
-def chatroom(data):
-    st.session_state["character_data"] = data
-    chatroom_popup()
+
 
 ## 내 채팅 목록에 있는 채팅하기 클릭
 def chatting(data):
     chat_reset_api()
-    st.session_state["chat_history"] = get_chat_history()
+    st.session_state["chat_history"] = ChatService.get_chat_history()
+    st.session_state["chatroom_data"] = data
     st.session_state["chatroom_title"] = data["name"]
     st.session_state["character_data"] = data["character"]
     st.session_state["chatroom_id"] = data["_id"]
     st.session_state["start_chat"] = True
+    st.session_state["new_chat"] = False
     
 
 #-------------------------------------------------------------------

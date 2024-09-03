@@ -1,7 +1,5 @@
 import streamlit as st 
 
-from core.config import configs
-
 from services.converter import converter
 from services.home import HomeService 
 
@@ -55,10 +53,16 @@ class HomePopup:
                 if st.session_state["login"]:
                     chatroom_id = HomeService.create_chatroom_api(insert_data)
                     if chatroom_id:
-                        st.session_state["chatroom_id"] = chatroom_id
+                        st.session_state["chatroom_data"] = {
+                            "_id": chatroom_id,
+                            "name": st.session_state["chatroom_name"]
+                        }
 
                 # 화면 전환
-                st.session_state["transition"] = True        
+                st.session_state["character_data"] = data
+                st.session_state["transition"] = True 
+                st.session_state["new_chat"] = True 
+                st.session_state["chat_history"] = []      
                 st.switch_page("pages/chatting.py")
 
 

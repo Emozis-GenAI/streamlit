@@ -4,8 +4,10 @@ from streamlit_tags import st_tags
 
 from core.state import *
 from core.utils import *
-from core.service import get_profile, update_char_api, convert_gen
+from core.service import update_char_api
 
+from services.create_char import CreateChar
+from services.converter import converter
 setting()
 #-------------------------------------------------------------------
 # Form(View)
@@ -33,13 +35,13 @@ with col2:
     )
     st.radio(
         label="성별", 
-        index=convert_gen(modify_data["gender"], method="idx"),
+        index=converter.gender(modify_data["gender"], method="idx"),
         options=["남","여","기타"], 
         key="char_gen"
     )
 
 # 캐릭터 프로필 목록 가져오기
-data = get_profile(st.session_state["char_gen"])
+data = CreateChar.get_profile(st.session_state["char_gen"])
 # popover 인덱스 초기화
 st.session_state["char_img"] = None
 
@@ -101,7 +103,7 @@ st.button(
 if st.session_state["modify_btn"]:
     modify_data["name"] = st.session_state["char_name"]
     modify_data["profile"] = st.session_state["select_img"]
-    modify_data["gender"] = convert_gen(st.session_state["char_gen"])
+    modify_data["gender"] = converter.gender(st.session_state["char_gen"])
     modify_data["relationship"] = ','.join(st.session_state["char_rel"])
     modify_data["personality"] = ','.join(st.session_state["char_per"])
     modify_data["greeting"] = st.session_state["char_greet"]
@@ -115,5 +117,5 @@ if st.session_state["modify_btn"]:
     else:
         st.error(response["message"])
 
-    re_initialize(["modified_data", "select_img"])
+    custom_init(["modified_data", "select_img"])
 

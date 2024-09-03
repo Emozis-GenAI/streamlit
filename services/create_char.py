@@ -16,7 +16,7 @@ class CreateChar:
     def get_profile(gender):
         result = {}
         response = requests.get(
-            url=f"{configs.API_URL}/profile/{Converter.convert_gen(gender)}"
+            url=f"{configs.API_URL}/profile/{Converter.gender(gender)}"
         )
         if response.status_code == 200:
             response_json = json.loads(response.text)
