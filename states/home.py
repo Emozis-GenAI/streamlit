@@ -1,5 +1,6 @@
 import streamlit as st 
 
+from core.state import *
 from services.converter import converter
 from services.home import HomeService 
 from services.chatting import ChatService
@@ -9,6 +10,7 @@ class HomePopup:
     @staticmethod
     @st.dialog("⚠ 로그인")
     def login_popup():
+        st.session_state["login_pop"] = True
         st.markdown("로그인 해야 할 수 있는 기능입니다.")
         _, col = st.columns(spec=[0.7, 0.3])
         login_btn = col.button("로그인", use_container_width=True)
@@ -82,3 +84,4 @@ class HomeClick:
     def chatroom(data):
         st.session_state["character_data"] = data
         HomePopup.chatroom_popup()
+        

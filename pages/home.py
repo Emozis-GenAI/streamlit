@@ -3,6 +3,7 @@ from streamlit_image_select import image_select
 
 from core.config import configs
 from core.utils import *
+from core.state import *
 
 from states.home import HomeClick, HomePopup
 
@@ -10,6 +11,7 @@ from services.converter import Converter
 from services.home import HomeService
 
 setting()
+custom_init(["header_btn"])
 #-------------------------------------------------------------------
 # Settings
 #-------------------------------------------------------------------
@@ -41,7 +43,9 @@ if st.session_state["header_btn"] == 0:
         st.session_state["transition"] = True
         st.switch_page("pages/chat_list.py")
     else:
-        HomePopup.login_popup()
+        st.warning("로그인 후 이용 가능합니다")
+        # HomePopup.login_popup()
+        
         
 # 캐릭터 생성 화면 전환
 elif st.session_state["header_btn"] == 1:
@@ -49,7 +53,9 @@ elif st.session_state["header_btn"] == 1:
         st.session_state["transition"] = True
         st.switch_page("pages/create_char.py")
     else:
-        HomePopup.login_popup()
+        st.warning("로그인 후 이용 가능합니다")
+        # HomePopup.login_popup()
+
 #-------------------------------------------------------------------
 # Rangking
 #-------------------------------------------------------------------
