@@ -19,6 +19,7 @@ def initialize():
 #     for state in states:
 #         st.session_state[state] = configs.dictionary[state]
 def custom_init(keys):
+    initialize()
     if st.session_state["transition"]:
         for key in keys:
             st.session_state[key] = configs.dictionary[key]
