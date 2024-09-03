@@ -2,9 +2,11 @@ import streamlit as st
 from streamlit_image_select import image_select
 from streamlit_tags import st_tags
 
+from core.logger import logger
 from core.state import *
 from core.utils import *
-from core.service import get_profile, create_char_api, convert_gen
+
+from services.create_char import CreateChar, Converter
 
 setting()
 # 초기화
@@ -28,16 +30,16 @@ with col2:
     st.radio(label="성별", options=["남","여","기타"], key="char_gen")
 
 # 성별에 따라 캐릭터 프로필 목록 가져오기
-data = get_profile(st.session_state["char_gen"])
+data = CreateChar.get_profile(st.session_state["char_gen"])
 # popover 선택 인덱스 초기화
-# st.session_state["char_img"] = 0
+st.session_state["char_img"] = 0
 
 # 프로필 선택 창
 with st.popover("프로필 선택", use_container_width=True):
     image_select(
         label="", 
         images=list(data.values()),
-        return_value="original",
+        return_value="index",
         key="char_img"
     )
     st.button(
@@ -57,7 +59,6 @@ keywords = st_tags(
                  '시어머니', '할아버지', '할머니'],
     maxtags = configs.MAX_TAGS,
     key="char_rel")
-print(st.session_state["char_rel"])
 # 성격
 keywords = st_tags(
     label="성격",
@@ -89,7 +90,7 @@ if st.session_state["create_btn"]:
     character_data = {
         "name": st.session_state["char_name"],
         "profile": st.session_state["select_img"],
-        "gender": convert_gen(st.session_state["char_gen"]),
+        "gender": Converter.convert_gen(st.session_state["char_gen"]),
         "relationship": ','.join(st.session_state["char_rel"]),
         "personality": ','.join(st.session_state["char_per"]),
         "greeting": st.session_state["char_greet"],
@@ -97,9 +98,7 @@ if st.session_state["create_btn"]:
         "user": st.session_state["user"]
     }
     # 데이터 전송
-    response = create_char_api(character_data)
-    if response["status"] == "success":
+    response = CreateChar.create_char_api(character_data)
+    if response:
         st.switch_page("pages/main.py")
-    else:
-        st.error(response["message"])
 

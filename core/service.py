@@ -4,6 +4,7 @@ import requests
 import json 
 import re
 
+from core.logger import logger
 from core.config import configs
 from core.utils import *
 #-------------------------------------------------------------------
@@ -69,7 +70,10 @@ def create_char_api(data):
         url=f"{configs.API_URL}/character",
         json=data
     )
-    response_json = json.loads(response.text)
+    if response.status_code == 200:
+        response_json = json.loads(response.text)
+    else:
+        logger.warning("🚨 API 연결에 실패했습니다.")
 
     return response_json
 
@@ -81,15 +85,7 @@ def convert_gen(gender, method="en"):
 
     return gen_values[gender.strip()]
 
-def get_profile(gender):
-    result = {}
-    response = requests.get(f"{configs.API_URL}/profile/{convert_gen(gender)}")
-    if response.status_code == 200:
-        data = json.loads(response.text)["data"]
-        ordered_data = sorted(data, key=lambda x: x["age"])
-        result = {i:x["img_url"] for i, x in enumerate(ordered_data)}
-    
-    return result
+
 #-------------------------------------------------------------------
 # Update Character
 #-------------------------------------------------------------------
