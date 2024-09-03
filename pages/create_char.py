@@ -7,6 +7,8 @@ from core.utils import *
 from core.service import get_profile, create_char_api, convert_gen
 
 setting()
+# 초기화
+custom_init(["select_img"])
 #-------------------------------------------------------------------
 # Form(View)
 #-------------------------------------------------------------------
@@ -28,7 +30,7 @@ with col2:
 # 성별에 따라 캐릭터 프로필 목록 가져오기
 data = get_profile(st.session_state["char_gen"])
 # popover 선택 인덱스 초기화
-st.session_state["char_img"] = None
+# st.session_state["char_img"] = 0
 
 # 프로필 선택 창
 with st.popover("프로필 선택", use_container_width=True):
@@ -49,22 +51,21 @@ with st.popover("프로필 선택", use_container_width=True):
 # 관계
 keywords = st_tags(
     label="관계",
-    text='관계를 입력하고 Enter를 누르세요(최대 4개)',
-    value=['친구', '썸남'],
+    text='관계를 입력하고 Enter를 누르세요(최대 5개)',
     suggestions=['애인', '남사친', '여사친', 
                  '전남친', '가족', '직장상사', 
                  '시어머니', '할아버지', '할머니'],
-    maxtags = 4,
+    maxtags = configs.MAX_TAGS,
     key="char_rel")
+print(st.session_state["char_rel"])
 # 성격
 keywords = st_tags(
     label="성격",
-    text='성격을 입력하고 Enter를 누르세요(최대 4개)',
-    value=['착함', '자상함'],
+    text='성격을 입력하고 Enter를 누르세요(최대 5개)',
     suggestions=['착함', '날카로움', '예민함', 
                  '온화함', '성격급함', '푸근함', 
                  '스윗함', '괴팍함', '인자함'],
-    maxtags = 4,
+    maxtags = configs.MAX_TAGS,
     key="char_per")
 # 상세 설명
 st.text_area(

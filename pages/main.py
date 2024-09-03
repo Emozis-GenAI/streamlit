@@ -40,6 +40,7 @@ if st.session_state["header_btn"] == 0:
 # 캐릭터 생성 화면 전환
 elif st.session_state["header_btn"] == 1:
     if st.session_state["login"]:
+        st.session_state["transition"] = True
         st.switch_page("pages/create_char.py")
     else:
         login_popup()
