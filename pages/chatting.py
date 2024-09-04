@@ -21,7 +21,7 @@ if st.session_state["new_chat"]:
 
 else:
     data = st.session_state["chatroom_data"]
-    print(data.keys())
+    # print(data.keys())
     char_data = data["character"]
 
 st.session_state["char_profile"] = char_data["profile"]
@@ -64,7 +64,7 @@ if len(st.session_state["chat_history"]) == 0:
 
 # 채팅 기록이 있을 때
 else:
-    print(st.session_state["chat_history"])
+    # print(st.session_state["chat_history"])
     for chat in st.session_state["chat_history"]:
         st_chat_message(chat["role"], chat["content"], save=False)
 #-------------------------------------------------------------------

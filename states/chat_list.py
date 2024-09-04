@@ -21,6 +21,7 @@ class ChatRoomClick:
         ChatService.reset_model_api()
         st.session_state["chatroom_data"] = data
         st.session_state["chat_history"] = ChatService.get_chat_history()
+        ChatService.send_chat_into_model()
         st.session_state["start_chat"] = True
         st.session_state["new_chat"] = False
     

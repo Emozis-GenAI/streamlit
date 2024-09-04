@@ -68,7 +68,27 @@ class ChatService:
             logger.warning("🚨 API 연결에 실패했습니다.")
 
         return result
+    
+    @staticmethod
+    def send_chat_into_model():
+        if not st.session_state["chat_history"]:
+            return False
+        
+        response = requests.post(
+            url=f"{configs.API_URL}/chat_history",
+            json=st.session_state["chat_history"]
+        )
+        if response.status_code == 200:
+            response_json = json.loads(response.text)
+            if response_json["status"] == "success":
+                logger.success(response_json["message"])
+                return True
+            else:
+                logger.warning(response_json["message"])
+        else:
+            logger.warning("🚨 API 연결에 실패했습니다.")
 
+        return False
 
     @staticmethod 
     async def send_recieve_chat(data, container):
