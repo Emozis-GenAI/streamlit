@@ -32,7 +32,7 @@ st.session_state["char_profile"] = char_data["profile"]
 with st.sidebar:
     # 사이드바 정보 출력
     st.markdown("---")
-    st_textbox(st.session_state["chatroom_title"], align="center")
+    st_textbox(data["name"], align="center")
     converter.make_form(char_data)
 #-------------------------------------------------------------------
 # Chatting
