@@ -61,6 +61,7 @@ with st.sidebar:
         )
         # 로그아웃 버튼(Script)
         if st.session_state["logout_btn"]:
+            controller.remove('user')
             st.session_state["login"] = False
             st.switch_page("pages/home.py")
     #-------------------------------------------------------------------
