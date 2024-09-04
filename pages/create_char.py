@@ -53,6 +53,7 @@ with st.popover("프로필 선택", use_container_width=True):
         on_click=CreateCharClick.change_img,
         args=[data]
     )
+    st_textbox("⚠ 팝업 페이지 외 부분을 클릭하면 창이 닫힙니다.", fontsize=0.8)
 # 관계
 if "char_rel" in st.session_state:
     rel_value = st.session_state["char_rel"]
