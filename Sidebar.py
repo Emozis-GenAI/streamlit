@@ -17,8 +17,9 @@ st.logo(
 # Settings
 #-------------------------------------------------------------------
 initialize()
-# print(sorted(st.session_state.keys()))
-# print(st.session_state["select_img"])
+if controller.get('user'):
+    st.session_state["user"] = controller.get('user')
+    st.session_state["login"] = True
 #-------------------------------------------------------------------
 # Sidebar Button(View)
 #-------------------------------------------------------------------

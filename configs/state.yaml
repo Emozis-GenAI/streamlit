@@ -7,7 +7,7 @@ start_chat: False
 character_data: None
 chatroom_data: None
 select_img: "https://i.postimg.cc/q7Ds0VGf/image.png"
-modified_data: None
+modify_data: None
 mypage_view: "mypage"
 chat_history: []
 chatroom_id: None

@@ -58,6 +58,7 @@ if st.session_state["login_window"] == "login":
             else:
                 response = LoginService.login_api(data)
                 if response:
+                    controller.set("user", response)
                     st.session_state["user"] = response
                     st.session_state["login"] = True
                     st.session_state["transition"] = True

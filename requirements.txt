@@ -7,7 +7,7 @@ motor
 python-dotenv
 st-pages
 streamlit
-streamlit-authenticator
+streamlit-cookies-controller
 streamlit-image-select
 streamlit-tags
 requests

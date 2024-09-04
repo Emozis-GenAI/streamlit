@@ -2,6 +2,9 @@ import streamlit as st
 from pathlib import Path 
 from dotenv import load_dotenv 
 
+from streamlit_cookies_controller import CookieController
+controller = CookieController()
+
 def setting():
     load_dotenv()
     read_mdfile("./static/css/css.md")

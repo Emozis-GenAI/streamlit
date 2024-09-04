@@ -181,4 +181,4 @@ pyrightconfig.json
 .obsidian
 .DS_Store
 exercise.ipynb
-configs/
+test.py
