@@ -1,10 +1,9 @@
 import os
 import yaml
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from pathlib import Path 
 
 load_dotenv()
-
 class Config:
     """config 폴더의 정보를 불러오는 클래스"""
     def __init__(self):

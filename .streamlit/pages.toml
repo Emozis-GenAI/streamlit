@@ -32,8 +32,3 @@ icon = "🎈"
 path = "pages/login.py"
 name = "Login"
 icon = "✔"
-
-[[pages]]
-path = "pages/test.py"
-name = "Test"
-icon = "✔"
